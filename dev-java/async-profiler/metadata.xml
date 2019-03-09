@@ -3,7 +3,7 @@
 <pkgmetadata>
     <maintainer type="person">
         <email>alesharik4@gmail.com</email>
-        <description>Alexey Arseniev</description>
+        <description>Alexey Arsenev</description>
     </maintainer>
     <longdescription>This project is a low overhead sampling profiler for Java that does not suffer from Safepoint bias problem.</longdescription>
 </pkgmetadata>
