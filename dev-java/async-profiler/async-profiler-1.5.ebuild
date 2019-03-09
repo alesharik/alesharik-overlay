@@ -19,8 +19,8 @@ BDEPEND=""
 pkg_preinst() {
 	dodir /usr/bin
 	dosym "${D}/profiler.sh" /usr/bin/async-profiler
-	echo "AsyncProfiler required options" >> /etc/sysctl.conf
-	echo "perk_event_paranoid = 1" >> /etc/sysctl.conf
-	echo "kptr_restrict = 0" >> /etc/sysctl.conf
+	grep -qxF '# AsyncProfiler required options' /etc/sysctl.conf || echo "# AsyncProfiler required options" >> /etc/sysctl.conf
+	grep -qxF 'perk_event_paranoid = 1' /etc/sysctl.conf || echo "perk_event_paranoid = 1" >> /etc/sysctl.conf
+	grep -qxF 'kptr_restrict = 0' /etc/sysctl.conf || echo "kptr_restrict = 0" >> /etc/sysctl.conf
 	sysctl -p
 }
