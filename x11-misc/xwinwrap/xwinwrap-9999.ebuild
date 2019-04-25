@@ -25,3 +25,7 @@ RDEPEND="${DEPEND}"
 src_prepare() {
 	cp "$FILESDIR"/Makefile ./
 }
+
+src_install() {
+	dobin xwinwrap
+}
