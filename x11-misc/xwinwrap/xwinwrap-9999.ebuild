@@ -23,5 +23,5 @@ DEPEND=">=x11-libs/libX11-1.0.3
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	epatch "$FILESDIR"/Makefile.patch
+	cp "$FILESDIR"/Makefile ./
 }
