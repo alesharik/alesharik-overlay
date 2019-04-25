@@ -22,10 +22,6 @@ DEPEND=">=x11-libs/libX11-1.0.3
 
 RDEPEND="${DEPEND}"
 
-pkg_setup() {
-	append-ldflags $(no-as-needed)
-}
-
-src_install() {
-	emake DESTDIR"${D}" install64
+src_prepare() {
+	epatch "$FILESDIR"/Makefile.patch
 }
