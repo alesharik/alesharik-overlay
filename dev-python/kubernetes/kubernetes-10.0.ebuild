@@ -29,5 +29,3 @@ RDEPEND=">=dev-python/certifi-14.05.14[${PYTHON_USEDEP}]
 	>=dev-python/urllib3-1.24.2[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}
 	>=dev-python/setuptools-21.0.0[${PYTHON_USEDEP}]"
-
-S="${WORKDIR}/python-${PV}"
