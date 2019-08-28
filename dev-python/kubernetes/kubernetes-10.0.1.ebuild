@@ -9,7 +9,7 @@ inherit git-r3 distutils-r1
 
 DESCRIPTION="Kubernetes python client"
 HOMEPAGE="https://github.com/kubernetes-client/python"
-SRC_URI="https://github.com/kubernetes-client/python.git"
+EGIT_REPO_URI="https://github.com/kubernetes-client/python.git"
 EGIT_BRANCH="release-${PV}"
 
 LICENSE="Apache-2.0"
