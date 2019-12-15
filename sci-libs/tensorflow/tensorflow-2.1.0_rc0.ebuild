@@ -4,7 +4,7 @@
 EAPI=7
 
 DISTUTILS_OPTIONAL=1
-PYTHON_COMPAT=( python2_7 python{3_5,3_6,3_7} )
+PYTHON_COMPAT=( python{3_5,3_6,3_7} )
 MY_PV=${PV/_rc/-rc}
 MY_P=${PN}-${MY_PV}
 
@@ -25,20 +25,22 @@ done
 # distfiles that bazel uses for the workspace, will be copied to basel-distdir
 bazel_external_uris="
 	https://storage.googleapis.com/mirror.tensorflow.org/www.kurims.kyoto-u.ac.jp/~ooura/fft2d.tgz -> oourafft2d-20061228.tgz
-	https://bitbucket.org/eigen/eigen/get/049af2f56331.tar.gz -> eigen-049af2f56331.tar.gz
+	https://bitbucket.org/eigen/eigen/get/afc120bc03bd.tar.gz -> eigen-afc120bc03bd.tar.gz
 	https://github.com/abseil/abseil-cpp/archive/43ef2148c0936ebf7cb4be6b19927a9d9d145b8f.tar.gz -> abseil-cpp-43ef2148c0936ebf7cb4be6b19927a9d9d145b8f.tar.gz
 	https://github.com/bazelbuild/bazel-skylib/releases/download/0.8.0/bazel-skylib.0.8.0.tar.gz
+	https://github.com/bazelbuild/bazel-skylib/releases/download/0.9.0/bazel_skylib-0.9.0.tar.gz
 	https://github.com/bazelbuild/bazel-toolchains/archive/92dd8a7a518a2fb7ba992d47c8b38299fe0be825.tar.gz -> bazel-toolchains-92dd8a7a518a2fb7ba992d47c8b38299fe0be825.tar.gz
+	https://github.com/bazelbuild/rules_cc/archive/0d5f3f2768c6ca2faca0079a997a97ce22997a0c.zip -> bazelbuild-rules_cc-0d5f3f2768c6ca2faca0079a997a97ce22997a0c.zip
 	https://github.com/bazelbuild/rules_closure/archive/308b05b2419edb5c8ee0471b67a40403df940149.tar.gz -> bazelbuild-rules_closure-308b05b2419edb5c8ee0471b67a40403df940149.tar.gz
 	https://github.com/bazelbuild/rules_docker/releases/download/v0.10.0/rules_docker-v0.10.0.tar.gz -> bazelbuild-rules_docker-v0.10.0.tar.gz
-	https://github.com/bazelbuild/rules_swift/releases/download/0.11.1/rules_swift.0.11.1.tar.gz -> bazelbuild-rules_swift.0.11.1.tar.gz
+	https://github.com/bazelbuild/rules_swift/releases/download/0.12.1/rules_swift.0.12.1.tar.gz -> bazelbuild-rules_swift.0.12.1.tar.gz
 	https://github.com/google/farmhash/archive/816a4ae622e964763ca0862d9dbd19324a1eaf45.tar.gz -> farmhash-816a4ae622e964763ca0862d9dbd19324a1eaf45.tar.gz
 	https://github.com/google/gemmlowp/archive/12fed0cd7cfcd9e169bf1925bc3a7a58725fdcc3.zip -> gemmlowp-12fed0cd7cfcd9e169bf1925bc3a7a58725fdcc3.zip
 	https://github.com/google/highwayhash/archive/fd3d9af80465e4383162e4a7c5e2f406e82dd968.tar.gz -> highwayhash-fd3d9af80465e4383162e4a7c5e2f406e82dd968.tar.gz
+	https://github.com/google/re2/archive/506cfa4bffd060c06ec338ce50ea3468daa6c814.tar.gz -> re2-506cfa4bffd060c06ec338ce50ea3468daa6c814.tar.gz
 	https://github.com/mborgerding/kissfft/archive/36dbc057604f00aacfc0288ddad57e3b21cfc1b8.tar.gz -> kissfft-36dbc057604f00aacfc0288ddad57e3b21cfc1b8.tar.gz
-	https://github.com/nlopezgi/bazel-toolchains/archive/94d31935a2c94fe7e7c7379a0f3393e181928ff7.tar.gz -> bazel-toolchains-94d31935a2c94fe7e7c7379a0f3393e181928ff7.tar.gz
 	https://github.com/pybind/pybind11/archive/v2.3.0.tar.gz -> pybind11-v2.3.0.tar.gz
-	https://github.com/llvm-mirror/llvm/archive/b7d166cebcf619a3691eed3f994384aab3d80fa6.tar.gz -> llvm-b7d166cebcf619a3691eed3f994384aab3d80fa6.tar.gz
+	https://github.com/llvm/llvm-project/archive/ecc999101aadc8dc7d4af9fd88be10fe42674aa0.tar.gz -> llvm-ecc999101aadc8dc7d4af9fd88be10fe42674aa0.tar.gz
 	cuda? (
 		https://github.com/nvidia/nccl/archive/0ceaec9cee96ae7658aa45686853286651f36384.tar.gz -> nvidia-nccl-0ceaec9cee96ae7658aa45686853286651f36384.tar.gz
 		https://github.com/NVlabs/cub/archive/1.8.0.zip -> cub-1.8.0.zip
@@ -56,13 +58,14 @@ RDEPEND="
 	app-arch/snappy
 	dev-db/lmdb
 	dev-db/sqlite
+	dev-libs/double-conversion
 	dev-libs/icu
-	>=dev-libs/jsoncpp-1.9
+	~dev-libs/jsoncpp-1.9.1
 	dev-libs/libpcre
 	dev-libs/nsync
 	dev-libs/openssl:0=
-	>=dev-libs/protobuf-3.6.1:=
-	>=dev-libs/re2-0.2018.04.01
+	>=dev-libs/protobuf-3.8.0:=
+	>=dev-libs/re2-0.2019.06.01
 	media-libs/giflib
 	media-libs/libjpeg-turbo
 	media-libs/libpng:0
@@ -84,40 +87,40 @@ RDEPEND="
 		>=dev-python/numpy-1.16[${PYTHON_USEDEP}]
 		dev-python/google-pasta[${PYTHON_USEDEP}]
 		dev-python/opt-einsum[${PYTHON_USEDEP}]
-		>=dev-python/protobuf-python-3.6.1[${PYTHON_USEDEP}]
+		>=dev-python/protobuf-python-3.8.0[${PYTHON_USEDEP}]
 		dev-python/six[${PYTHON_USEDEP}]
 		dev-python/termcolor[${PYTHON_USEDEP}]
 		>=dev-python/grpcio-1.22.0[${PYTHON_USEDEP}]
 		>=dev-python/wrapt-1.11.1[${PYTHON_USEDEP}]
 		>=net-libs/google-cloud-cpp-0.10.0
 		>=sci-libs/keras-applications-1.0.8[${PYTHON_USEDEP}]
-		>=sci-libs/keras-preprocessing-1.0.5[${PYTHON_USEDEP}]
+		>=sci-libs/keras-preprocessing-1.1.0[${PYTHON_USEDEP}]
 		>=sci-visualization/tensorboard-2.0.0[${PYTHON_USEDEP}]
-		$(python_gen_cond_dep 'dev-python/enum34[${PYTHON_USEDEP}]' 'python2*')
-		$(python_gen_cond_dep 'dev-python/functools32[${PYTHON_USEDEP}]' 'python2*')
 	)"
 DEPEND="${RDEPEND}
-	dev-python/mock"
+	python? (
+		dev-python/mock
+		dev-python/setuptools
+	)"
 PDEPEND="python? (
 		>=sci-libs/tensorflow-estimator-2.0.0[${PYTHON_USEDEP}]
 	)"
 BDEPEND="
 	app-arch/unzip
-	>=dev-libs/protobuf-3.6.0
+	>=dev-libs/protobuf-3.8.0
 	dev-java/java-config
-	dev-python/mock
 	dev-lang/swig
-	dev-python/cython
 	|| (
-		=dev-util/bazel-0.24*
-		=dev-util/bazel-0.26*
 		=dev-util/bazel-0.27*
+		=dev-util/bazel-0.29*
 	)
 	cuda? (
 		>=dev-util/nvidia-cuda-toolkit-9.1[profiler]
 	)
 	!python? ( dev-lang/python )
 	python? (
+		dev-python/cython
+		dev-python/mock
 		>=dev-python/grpcio-tools-1.22.0
 	)"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
@@ -126,10 +129,11 @@ S="${WORKDIR}/${MY_P}"
 
 PATCHES=(
 	"${FILESDIR}/tensorflow-1.15.0_rc0-0001-WORKSPACE-add-rules-docker-http_archive-bazel-toolch.patch"
+	"${FILESDIR}/tensorflow-2.1.0-external_libs.patch"
 )
 DOCS=( AUTHORS CONTRIBUTING.md ISSUE_TEMPLATE.md README.md RELEASE.md )
 CHECKREQS_MEMORY="5G"
-CHECKREQS_DISK_BUILD="5G"
+CHECKREQS_DISK_BUILD="10G"
 
 get-cpu-flags() {
 	local i f=()
@@ -153,8 +157,8 @@ pkg_setup() {
 	}
 	use python && python_foreach_impl count_impls
 
-	# 5G to build C/C++ libs, 5G per python impl
-	CHECKREQS_DISK_BUILD="$((5 + 5 * ${num_pythons_enabled}))G"
+	# 10G to build C/C++ libs, 5G per python impl
+	CHECKREQS_DISK_BUILD="$((10 + 6 * ${num_pythons_enabled}))G"
 	check-reqs_pkg_setup
 }
 
@@ -169,6 +173,10 @@ src_prepare() {
 
 	append-flags $(get-cpu-flags)
 	bazel_setup_bazelrc
+
+	if ver_test "$(cuda_toolkit_version)" -ge "10.2"; then
+		eapply "${FILESDIR}/tensorflow-2.1.0-cuda_10.2_support_bin2c.patch"
+	fi
 
 	default
 	use python && python_copy_sources
@@ -209,8 +217,21 @@ src_configure() {
 			export TF_CUDNN_VERSION="$(cuda_cudnn_version)"
 			einfo "Setting CUDA version: $TF_CUDA_VERSION"
 			einfo "Setting CUDNN version: $TF_CUDNN_VERSION"
+
+			if [[ -z "$TF_CUDA_COMPUTE_CAPABILITIES" ]]; then
+				ewarn "WARNING: Tensorflow is being built with its default CUDA compute capabilities: 3.5 and 7.0."
+				ewarn "These may not be optimal for your GPU."
+				ewarn ""
+				ewarn "To configure Tensorflow with the CUDA compute capability that is optimal for your GPU,"
+				ewarn "set TF_CUDA_COMPUTE_CAPABILITIES in your make.conf, and re-emerge tensorflow."
+				ewarn "For example, to use CUDA capability 7.5 & 3.5, add: TF_CUDA_COMPUTE_CAPABILITIES=7.5,3.5"
+				ewarn ""
+				ewarn "You can look up your GPU's CUDA compute capability at https://developer.nvidia.com/cuda-gpus"
+				ewarn "or by running /opt/cuda/extras/demo_suite/deviceQuery | grep 'CUDA Capability'"
+			fi
 		fi
 
+		# com_googlesource_code_re2 weird branch using absl, doesnt work with released re2
 		local SYSLIBS=(
 			absl_py
 			astor_archive
@@ -218,7 +239,6 @@ src_configure() {
 			com_github_googleapis_googleapis
 			com_github_googlecloudplatform_google_cloud_cpp
 			com_google_protobuf
-			com_googlesource_code_re2
 			curl
 			cython
 			double_conversion
@@ -226,11 +246,11 @@ src_configure() {
 			flatbuffers
 			functools32_archive
 			gast_archive
-			gif_archive
+			gif
 			grpc
 			hwloc
 			icu
-			jpeg
+			libjpeg_turbo
 			jsoncpp_git
 			keras_applications_archive
 			lmdb
@@ -240,7 +260,7 @@ src_configure() {
 			org_sqlite
 			pasta
 			pcre
-			png_archive
+			png
 			six_archive
 			snappy
 			swig
@@ -255,7 +275,7 @@ src_configure() {
 		# This is not autoconf
 		./configure || die
 
-		echo 'build --config=noaws --config=nohdfs --config=noignite --config=nokafka' >> .bazelrc || die
+		echo 'build --config=noaws --config=nohdfs' >> .bazelrc || die
 		echo 'build --define tensorflow_mkldnn_contraction_kernel=0' >> .bazelrc || die
 		echo 'build --incompatible_no_support_tools_in_action_inputs=false' >> .bazelrc || die
 	}
@@ -349,3 +369,4 @@ src_install() {
 
 	einstalldocs
 }
+
