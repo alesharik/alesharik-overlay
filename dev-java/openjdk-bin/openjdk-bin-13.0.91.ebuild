@@ -6,6 +6,7 @@ EAPI=6
 inherit java-vm-2
 
 VERSION="2019-12-16-09-49"
+S="${WORKDIR}/jdk-13.0.1+9"
 
 abi_uri() {
 	echo "${2-$1}? (
@@ -52,7 +53,6 @@ PDEPEND="webstart? ( >=dev-java/icedtea-web-1.6.1:0 )
 RESTRICT="preserve-libs splitdebug"
 QA_PREBUILT="*"
 
-S="${WORKDIR}/jdk-${MY_PV}"
 
 pkg_pretend() {
 	if [[ "$(tc-is-softfloat)" != "no" ]]; then
@@ -115,4 +115,3 @@ pkg_postinst() {
 		ewarn "absolute location under ${EPREFIX}/opt/${P}."
 	fi
 }
-
