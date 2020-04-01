@@ -46,6 +46,10 @@ src_install() {
 	dodir "${dest}"
 	cp -pPR * "${ddest}" || die
 
+        if use native-image ; then
+		dosym ${dest}/bin/native-image /usr/bin/native-image
+	fi
+
 	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}-${SLOT}.env.sh
 	java-vm_set-pax-markings "${ddest}"
 	java-vm_revdep-mask
