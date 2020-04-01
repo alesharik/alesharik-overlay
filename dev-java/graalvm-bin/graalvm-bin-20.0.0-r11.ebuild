@@ -16,7 +16,7 @@ DESCRIPTION="GraalVM prebuild binaries"
 HOMEPAGE="https://www.graalvm.org/"
 LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64"
-IUSE="+gentoo-vm native-image source examples"
+IUSE="+gentoo-vm native-image"
 
 RDEPEND=">=sys-libs/glibc-2.2.5:*
 	sys-libs/zlib"
@@ -38,14 +38,6 @@ src_unpack() {
 src_install() {
 	local dest="/opt/${P}"
 	local ddest="${ED%/}/${dest#/}"
-
-	if ! use examples ; then
-		rm -vr sample/ || die
-	fi
-
-	if ! use source ; then
-		rm -v src.zip || die
-	fi
 
 	dodir "${dest}"
 	cp -pPR * "${ddest}" || die
