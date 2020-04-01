@@ -47,7 +47,7 @@ src_install() {
 	java-vm_revdep-mask
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
 
-        if use netive-image ; then
+        if use native-image ; then
 		bin/gu -A -n -N -L ${DISTDIR}/native-image-installable-svm-java${JVM_VER}-linux-amd64-${PV}.jar
 	fi
 }
