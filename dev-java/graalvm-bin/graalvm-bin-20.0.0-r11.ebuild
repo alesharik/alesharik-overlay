@@ -7,11 +7,10 @@ inherit java-vm-2
 
 JVM_VER=${PR:1}
 
-SLOT=$JVM_VER
+SLOT=${JVM_VER}
 
-SRC_URI="
-	https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${PV}/graalvm-ce-java${JVM_VER}-linux-amd64-${PV}.tar.gz -> ${P}.tar.gz 
-	native-image? ( https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${PV}/native-image-installable-svm-java${JVM_VER}-linux-amd64-${PV}.jar -> native-image-${P}.jar )"
+SRC_URI="https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${PV}/graalvm-ce-java${JVM_VER}-linux-amd64-${PV}.tar.gz
+	native-image? ( https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${PV}/native-image-installable-svm-java${JVM_VER}-linux-amd64-${PV}.jar )"
 
 DESCRIPTION="GraalVM prebuild binaries"
 HOMEPAGE="https://www.graalvm.org/"
@@ -24,11 +23,16 @@ RDEPEND=">=sys-libs/glibc-2.2.5:*
 
 RESTRICT="preserve-libs splitdebug"
 QA_PREBUILT="*"
+S=${WORKDIR}/graalvm-ce-java${JVM_VER}-${PV}
 
 pkg_pretend() {
 	if [[ "$(tc-is-softfloat)" != "no" ]]; then
 		die "These binaries require a hardfloat system."
 	fi
+}
+
+src_unpack() {
+	unpack graalvm-ce-java${JVM_VER}-linux-amd64-${PV}.tar.gz
 }
 
 src_install() {
@@ -52,7 +56,7 @@ src_install() {
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
 
         if use netive-image ; then
-		bin/gu -A -n -N -L ${WORKDIR}/native-image-${P}.jar
+		bin/gu -A -n -N -L ${DISTDIR}/native-image-installable-svm-java${JVM_VER}-linux-amd64-${PV}.jar
 	fi
 }
 
