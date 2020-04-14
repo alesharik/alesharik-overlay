@@ -1,11 +1,12 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=6
 
 inherit java-vm-2
 
-MINOR_VER=$(ver_cut 3)
+VER_ARR=(${PV//./ })
+MINOR_VER=${VER_ARR[2]}
 S="${WORKDIR}/jdk-${SLOT}+$MINOR_VER"
 
 abi_uri() {
