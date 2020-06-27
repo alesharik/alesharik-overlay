@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+	    <email>alesharik4@gmail.com</email>
+		<description>Aleksei Arsenev</description>
+	</maintainer>
+	<longdescription>RouterOS syntax highlight for vim</longdescription>
+</pkgmetadata> 
