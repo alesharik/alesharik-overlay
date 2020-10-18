@@ -1,16 +1,17 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
 inherit java-vm-2
 
-VERSION="2019-12-16-09-49"
-S="${WORKDIR}/jdk-13.0.1+9"
+VER_ARR=(${PV//./ })
+MINOR_VER=${VER_ARR[2]}
+S="${WORKDIR}/jdk-${SLOT}+$MINOR_VER"
 
 abi_uri() {
 	echo "${2-$1}? (
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk${SLOT}u-${VERSION}/OpenJDK${SLOT}U-jdk_${1}_linux_hotspot_${VERSION}.tar.gz
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${SLOT}+$MINOR_VER/OpenJDK${SLOT}U-jdk_${1}_linux_hotspot_${SLOT}_$MINOR_VER.tar.gz
 		)"
 }
 
@@ -27,7 +28,7 @@ DESCRIPTION="Prebuilt Java JDK binaries provided by AdoptOpenJDK"
 HOMEPAGE="https://adoptopenjdk.net"
 LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64 ~ppc64"
-IUSE="alsa cups doc examples +gentoo-vm headless-awt nsplugin selinux source +webstart"
+IUSE="alsa cups doc examples +gentoo-vm headless-awt selinux source +webstart"
 
 RDEPEND="
 	media-libs/fontconfig:1.0
@@ -47,8 +48,7 @@ RDEPEND="
 		x11-libs/libXtst
 	)"
 
-PDEPEND="webstart? ( >=dev-java/icedtea-web-1.6.1:0 )
-	nsplugin? ( >=dev-java/icedtea-web-1.6.1:0[nsplugin] )"
+PDEPEND="webstart? ( >=dev-java/icedtea-web-1.8.4-r1:0 )"
 
 RESTRICT="preserve-libs splitdebug"
 QA_PREBUILT="*"
