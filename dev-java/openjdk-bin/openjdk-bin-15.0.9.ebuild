@@ -7,7 +7,7 @@ inherit java-vm-2
 
 VER_ARR=(${PV//./ })
 MINOR_VER=${VER_ARR[2]}
-S="${WORKDIR}/jdk-${SLOT}+$MINOR_VER"
+S="${WORKDIR}/jdk-${SLOT}.0.1+$MINOR_VER"
 
 abi_uri() {
 	echo "${2-$1}? (
