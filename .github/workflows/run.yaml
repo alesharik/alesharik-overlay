@@ -1,0 +1,51 @@
+name: Deploy new version
+on:
+  push:
+    branches:
+      - automation
+  schedule:
+    - cron: 0 0 * * *
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: automation
+      - name: Stable rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+      - name: Cache Rust
+        uses: Swatinem/rust-cache@v2
+
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+          path: work
+      - name: Run tool
+        run: cargo run -- ../work/
+      - name: Run repoman
+        uses: addnab/docker-run-action@v3
+        with:
+          image: madhacking/gentoo-testrunner:latest
+          options: -v ${{ github.workspace }}:/data
+          run: |
+            cd /data/work
+            repoman manifest
+      - name: Check if has changes to push
+        id: changed
+        run: echo "{changed}={$(git diff --exit-code -s && echo 0 || echo 1)}" >> $GITHUB_OUTPUT
+      - name: Commit files
+        if: "${steps.changed.outputs.changed}"
+        run: |
+          cd ../work
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Automatic update"
+      - name: Push changes
+        if: "${steps.changed.outputs.changed}"
+        uses: ad-m/github-push-action@master
+        with:
+          branch: ${{ github.head_ref }}
+          directory: ../work
