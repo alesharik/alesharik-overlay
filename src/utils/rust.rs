@@ -41,6 +41,7 @@ impl CargoPackageExpander {
         if let Some(license) = self.license.take() {
             ebuild_data.license = license;
         }
+        ebuild_data.crates.push(format!("\t{}-{}\n", &ebuild_data.name, &ebuild_data.version));
 
         write_ebuild(ebuild_data, dest, None)?;
         Ok(())
