@@ -357,7 +357,7 @@ DESCRIPTION="This is a Sentry command line client for some generic tasks."
 # Double check the homepage as the cargo_metadata crate
 # does not provide this value so instead repository is used
 HOMEPAGE="https://docs.sentry.io/product/cli/"
-SRC_URI="$(cargo_crate_uris)"
+SRC_URI="$(cargo_crate_uris) https://github.com/getsentry/sentry-cli/archive/refs/tags/2.10.0.tar.gz"
 
 # License set may be more restrictive as OR is not respected
 # use cargo-license for a more accurate license picture
