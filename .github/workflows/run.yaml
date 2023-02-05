@@ -37,14 +37,14 @@ jobs:
         id: changed
         run: echo "{changed}={$(git diff --exit-code -s && echo 0 || echo 1)}" >> $GITHUB_OUTPUT
       - name: Commit files
-        if: "${steps.changed.outputs.changed}"
+        if: ${{ steps.changed.outputs.changed == 1 }}
         run: |
           cd ../work
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -a -m "Automatic update"
       - name: Push changes
-        if: "${steps.changed.outputs.changed}"
+        if: ${{ steps.changed.outputs.changed == 1 }}
         uses: ad-m/github-push-action@master
         with:
           branch: ${{ github.head_ref }}
