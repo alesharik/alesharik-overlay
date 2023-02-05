@@ -31,8 +31,7 @@ jobs:
           image: madhacking/gentoo-testrunner:latest
           options: -v ${{ github.workspace }}/work:/data
           run: |
-            cd /data/work
-            repoman manifest
+            cd /data && repoman manifest
       - name: Check if has changes to push
         id: changed
         run: echo "{changed}={$(cd work/ && git diff --exit-code -s && echo 0 || echo 1)}" >> $GITHUB_OUTPUT
