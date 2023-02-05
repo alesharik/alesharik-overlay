@@ -48,10 +48,17 @@ pub struct SentryCliPackageExpander {
 impl PackageExpander for SentryCliPackageExpander {
     async fn expand(&mut self, version: Version, path: &Path) -> Result<()> {
         self.repo.checkout(&version.to_string())?;
+
+        let template = "{%- extends \"base.tera\" -%}\
+                            \
+                            {%- block src_uri -%}{% raw -%}\"$(cargo_crate_uris) URL\"{%- endraw %}{%- endblock %}"
+            .replace("URL", &format!("https://github.com/getsentry/sentry-cli/archive/refs/tags/{}.tar.gz", version));
+
         CargoPackageExpander::new()
             .description("This is a Sentry command line client for some generic tasks.")
             .homepage("https://docs.sentry.io/product/cli/")
             .license("BSD-3")
+            .template(&template)
             .expand(&self.repo.path(), path)
     }
 }
