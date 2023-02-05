@@ -1,0 +1,8 @@
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+    <maintainer type="person">
+        <email>alesharik4@gmail.com</email>
+        <name>Aleksey Arsenev</name>
+    </maintainer>
+    <longdescription>This is a Sentry command line client for some generic tasks.</longdescription>
+</pkgmetadata>
